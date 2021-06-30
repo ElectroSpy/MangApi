@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/index.css') }}">
+{% block title %} Accueil {% endblock title %}
+
+{% extends "layout/root.html" %}
+
+{% block content %}
+<div>
+    <div class="container"
+        <section class="hero-section">
+            <form action="{{ url_for('index')}}" method="post" role="form">
+                <h3 class="title">Categorie</h3>
+                {% for categorie in categories %}
+                    <input type="checkbox" id="id_{{categorie}}" name="categorie" value="{{categorie}}">
+                    <label for="id_{{categorie}}" style="color: white">{{categorie}}</label>
+                {% endfor %}
+                <div class="button_container">
+                    <button class="btn btn-primary" type="submit" id="validate-btn" style="margin-bottom: 50px">Valider</button>
+                </div>
+            </form>
+        <div class="count" style="margin-top: 50px; display: flex; justify-content: center">
+            <p class="title">
+                {% if countmanga == 0 %}
+                    Aucun Manga trouvé
+                {% elif countmanga == 1 %}
+                    {{ countmanga }} Manga trouvé
+                {% else %}
+                    {{ countmanga }} Mangas trouvés
+                {% endif %}
+            </p>
+        </div>
+            <div class="card-grid">
+
+                {% for Manga in mangadbs %}
+
+                    <a class="card" href="{{ url_for('detail', id=Manga._id) }}" style="transition: ease 1s">
+                    <div class="card__background" style="background-image: url({{Manga.image_card}})"></div>
+                    <div class="card__content">
+                        <p class="card__category">{{Manga.categorie}}</p>
+                        <h3 class="card__heading">{{Manga.titre}}</h3>
+                    </div>
+                    </a>
+
+                {% endfor %}
+            </div>
+        </section>
+    </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+{% endblock content %}
+</html>
